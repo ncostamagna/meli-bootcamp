@@ -2,12 +2,14 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
 	"github.com/ncostamagna/meli-bootcamp/cmd/server/handler"
 	"github.com/ncostamagna/meli-bootcamp/internal/products"
 	"github.com/ncostamagna/meli-bootcamp/pkg/store"
 )
 
 func main() {
+	_ = godotenv.Load()
 	db := store.New(store.FileType, "./products.json")
 	repo := products.NewRepository(db)
 	service := products.NewService(repo)

@@ -1,9 +1,11 @@
 package handler
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/ncostamagna/meli-bootcamp/internal/products"
 	"github.com/ncostamagna/meli-bootcamp/pkg/web"
+	"os"
 )
 
 type request struct {
@@ -29,7 +31,7 @@ func (c *Product) GetAll() gin.HandlerFunc {
 
 		token := ctx.Request.Header.Get("token")
 
-		if token != "123456" {
+		if token != os.Getenv("TOKEN"){
 			ctx.JSON(401, web.NewResponse(401, nil, "Token inválido"))
 			return
 		}
@@ -54,7 +56,9 @@ func (c *Product) Store() gin.HandlerFunc {
 
 		token := ctx.Request.Header.Get("token")
 
-		if token != "123456" {
+		fmt.Println(os.Getenv("TOKEN"))
+
+		if token != os.Getenv("TOKEN") {
 			ctx.JSON(401,  web.NewResponse(401, nil, "Token inválido"))
 			return
 		}

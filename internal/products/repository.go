@@ -1,7 +1,6 @@
 package products
 
 import (
-	"fmt"
 	"github.com/ncostamagna/meli-bootcamp/pkg/store"
 )
 
@@ -29,7 +28,6 @@ func NewRepository(db store.Store) Repository {
 
 func (r *repository) GetAll() ([]Product, error) {
 	var ps []Product
-	fmt.Println("entra")
 	r.db.Read(&ps)
 	return ps, nil
 }
