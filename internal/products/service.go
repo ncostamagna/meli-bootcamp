@@ -17,7 +17,7 @@ func NewService(r Repository) Service {
 
 func (s *service) GetAll() ([]Product, error) {
 	ps, err := s.repository.GetAll()
-	if err != nil{
+	if err != nil {
 		return nil, err
 	}
 
@@ -29,8 +29,8 @@ func (s *service) Store(nombre, tipo string, cantidad int, precio float64) (Prod
 
 	lastID++
 
-	producto, err := s.repository.Store(lastID,nombre, tipo, cantidad, precio)
-	if err != nil{
+	producto, err := s.repository.Store(lastID, nombre, tipo, cantidad, precio)
+	if err != nil {
 		return Product{}, err
 	}
 

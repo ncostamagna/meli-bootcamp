@@ -9,9 +9,9 @@ import (
 )
 
 type request struct {
-	Name string `json:"nombre"`
-	Type string `json:"tipo"`
-	Count int   `json:"cantidad"`
+	Name  string  `json:"nombre"`
+	Type  string  `json:"tipo"`
+	Count int     `json:"cantidad"`
 	Price float64 `json:"precio"`
 }
 
@@ -25,29 +25,28 @@ func NewProduct(p products.Service) *Product {
 	}
 }
 
-
 func (c *Product) GetAll() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 
 		token := ctx.Request.Header.Get("token")
 
-		if token != os.Getenv("TOKEN"){
+		if token != os.Getenv("TOKEN") {
 			ctx.JSON(401, web.NewResponse(401, nil, "Token inválido"))
 			return
 		}
 
 		p, err := c.service.GetAll()
 		if err != nil {
-			ctx.JSON(400, web.NewResponse(400,nil, err.Error()))
+			ctx.JSON(400, web.NewResponse(400, nil, err.Error()))
 			return
 		}
 
 		if len(p) == 0 {
-			ctx.JSON(404, web.NewResponse(404,nil, "No hay productos almacenados"))
+			ctx.JSON(404, web.NewResponse(404, nil, "No hay productos almacenados"))
 			return
 		}
 
-		ctx.JSON(200, web.NewResponse(200,p, ""))
+		ctx.JSON(200, web.NewResponse(200, p, ""))
 	}
 }
 
@@ -59,14 +58,14 @@ func (c *Product) Store() gin.HandlerFunc {
 		fmt.Println(os.Getenv("TOKEN"))
 
 		if token != os.Getenv("TOKEN") {
-			ctx.JSON(401,  web.NewResponse(401, nil, "Token inválido"))
+			ctx.JSON(401, web.NewResponse(401, nil, "Token inválido"))
 			return
 		}
 
 		var req request
 
 		if err := ctx.Bind(&req); err != nil {
-			ctx.JSON(400,  web.NewResponse(400, nil, err.Error()))
+			ctx.JSON(400, web.NewResponse(400, nil, err.Error()))
 			return
 		}
 
@@ -92,9 +91,9 @@ func (c *Product) Store() gin.HandlerFunc {
 
 		p, err := c.service.Store(req.Name, req.Type, req.Count, req.Price)
 		if err != nil {
-			ctx.JSON(400,  web.NewResponse(400, nil, err.Error()))
+			ctx.JSON(400, web.NewResponse(400, nil, err.Error()))
 			return
 		}
-		ctx.JSON(200, web.NewResponse(200,p, ""))
+		ctx.JSON(200, web.NewResponse(200, p, ""))
 	}
 }
