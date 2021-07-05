@@ -19,5 +19,9 @@ func main() {
 	pr := r.Group("/products")
 	pr.POST("/", p.Store())
 	pr.GET("/", p.GetAll())
+	pr.PUT("/:id", p.Update())
+	pr.PATCH("/:id", p.UpdateName())
+	pr.DELETE("/:id", p.Delete())
+
 	r.Run() // listen and serve on 0.0.0.0:8080 (for windows "localhost:8080")
 }

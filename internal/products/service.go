@@ -2,7 +2,10 @@ package products
 
 type Service interface {
 	GetAll() ([]Product, error)
-	Store(nombre, tipo string, cantidad int, precio float64) (Product, error)
+	Store(name, productType string, count int, price float64) (Product, error)
+	Update(id int, name, productType string, count int, price float64) (Product, error)
+	UpdateName(id int, name string) (Product, error)
+	Delete(id int) error
 }
 
 type service struct {
@@ -35,4 +38,17 @@ func (s *service) Store(nombre, tipo string, cantidad int, precio float64) (Prod
 	}
 
 	return producto, nil
+}
+
+func (s *service) Update(id int, name, productType string, count int, price float64) (Product, error) {
+
+	return s.repository.Update(id, name, productType, count, price)
+}
+
+func (s *service) UpdateName(id int, name string) (Product, error) {
+	return s.repository.UpdateName(id, name)
+}
+
+func (s *service) Delete(id int) error {
+	return s.repository.Delete(id)
 }
