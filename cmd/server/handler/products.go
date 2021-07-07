@@ -26,6 +26,15 @@ func NewProduct(p products.Service) *Product {
 	}
 }
 
+// ListProducts godoc
+// @Summary List products
+// @Tags Products
+// @Description get products
+// @Accept  json
+// @Produce  json
+// @Param token header string true "token"
+// @Success 200 {object} web.Response
+// @Router /products [get]
 func (c *Product) GetAll() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 
@@ -46,11 +55,20 @@ func (c *Product) GetAll() gin.HandlerFunc {
 			ctx.JSON(404, web.NewResponse(404, nil, "No hay productos almacenados"))
 			return
 		}
-
 		ctx.JSON(200, web.NewResponse(200, p, ""))
 	}
 }
 
+// StoreProducts godoc
+// @Summary Store products
+// @Tags Products
+// @Description store products
+// @Accept  json
+// @Produce  json
+// @Param token header string true "token"
+// @Param product body request true "Product to store"
+// @Success 200 {object} web.Response
+// @Router /products [post]
 func (c *Product) Store() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 
@@ -99,6 +117,16 @@ func (c *Product) Store() gin.HandlerFunc {
 	}
 }
 
+// StoreProducts godoc
+// @Summary Update products
+// @Tags Products
+// @Accept  json
+// @Produce  json
+// @Param token header string true "token"
+// @Param id path int true "Products ID"
+// @Param product body request true "Product to update"
+// @Success 200 {object} web.Response
+// @Router /products/{id} [put]
 func (c *Product) Update() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 
@@ -152,6 +180,16 @@ func (c *Product) Update() gin.HandlerFunc {
 	}
 }
 
+// StoreProducts godoc
+// @Summary Update products name
+// @Tags Products
+// @Accept  json
+// @Produce  json
+// @Param token header string true "token"
+// @Param id path int true "Products ID"
+// @Param product body request true "Product name to update"
+// @Success 200 {object} web.Response
+// @Router /products/{id} [patch]
 func (c *Product) UpdateName() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 
@@ -190,7 +228,15 @@ func (c *Product) UpdateName() gin.HandlerFunc {
 	}
 }
 
-
+// StoreProducts godoc
+// @Summary Delete products
+// @Tags Products
+// @Accept  json
+// @Produce  json
+// @Param token header string true "token"
+// @Param id path int true "Products ID"
+// @Success 200 {object} web.Response
+// @Router /products/{id} [delete]
 func (c *Product) Delete() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 
