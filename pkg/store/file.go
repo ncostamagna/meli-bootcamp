@@ -36,12 +36,12 @@ type Mock struct {
 	Err error
 }
 
-func (fl *FileStore) AddMock(mock *Mock) {
-	fl.Mock = mock
+func (fs *FileStore) AddMock(mock *Mock) {
+	fs.Mock = mock
 }
 
-func (fl *FileStore) ClearMock() {
-	fl.Mock = nil
+func (fs *FileStore) ClearMock() {
+	fs.Mock = nil
 }
 
 func (fs *FileStore) Write(data interface{}) error {
