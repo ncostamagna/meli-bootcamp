@@ -32,7 +32,7 @@ type FileStore struct {
 }
 
 type Mock struct {
-	Data interface{}
+	Data []byte
 	Err error
 }
 
@@ -65,8 +65,7 @@ func (fs *FileStore) Read(data interface{}) error {
 		if fs.Mock.Err != nil {
 			return fs.Mock.Err
 		}
-		data = fs.Mock.Data
-		return nil
+		return json.Unmarshal(fs.Mock.Data, data)
 	}
 
 
