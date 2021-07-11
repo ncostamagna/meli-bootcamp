@@ -3,9 +3,10 @@ package products
 import (
 	"encoding/json"
 	"errors"
-	"github.com/go-playground/assert/v2"
-	"github.com/ncostamagna/meli-bootcamp/pkg/store"
 	"testing"
+
+	"github.com/ncostamagna/meli-bootcamp/pkg/store"
+	"github.com/stretchr/testify/assert"
 )
 
 const errorGetAll = "error for GetAll"
@@ -21,11 +22,11 @@ func TestGetAllError(t *testing.T) {
 		FileName: "",
 		Mock:     &dbMock,
 	}
-	myRepo:= NewRepository(&storeMocked)
+	myRepo := NewRepository(&storeMocked)
 	// Ejecución
-	_,err := myRepo.GetAll()
+	_, err := myRepo.GetAll()
 	// validacion
-	assert.Equal(t,err,errorEsperado)
+	assert.Equal(t, err, errorEsperado)
 }
 
 func TestGetAll(t *testing.T) {
@@ -54,9 +55,9 @@ func TestGetAll(t *testing.T) {
 		FileName: "",
 		Mock:     &dbMock,
 	}
-	myRepo:= NewRepository(&storeMocked)
+	myRepo := NewRepository(&storeMocked)
 	// Ejecución
-	resp,_ := myRepo.GetAll()
+	resp, _ := myRepo.GetAll()
 	// validacion
-	assert.Equal(t,resp,input)
+	assert.Equal(t, resp, input)
 }
