@@ -12,25 +12,25 @@ import (
 const errorGetAll = "error for GetAll"
 
 func TestGetAllError(t *testing.T) {
-	// Inicializacion (input/output)
-	errorEsperado := errors.New(errorGetAll)
+	// Initializing Input/output
+	expectedError := errors.New(errorGetAll)
 	dbMock := store.Mock{
 		Data: nil,
-		Err:  errorEsperado,
+		Err:  expectedError,
 	}
 	storeMocked := store.FileStore{
 		FileName: "",
 		Mock:     &dbMock,
 	}
 	myRepo := NewRepository(&storeMocked)
-	// Ejecución
+
 	_, err := myRepo.GetAll()
-	// validacion
-	assert.Equal(t, err, errorEsperado)
+
+	assert.Equal(t, err, expectedError)
 }
 
 func TestGetAll(t *testing.T) {
-	// Inicializacion (input/output)
+	// Initializing Input/output
 	input := []Product{
 		{
 			ID:    1,
@@ -56,8 +56,8 @@ func TestGetAll(t *testing.T) {
 		Mock:     &dbMock,
 	}
 	myRepo := NewRepository(&storeMocked)
-	// Ejecución
+
 	resp, _ := myRepo.GetAll()
-	// validacion
+
 	assert.Equal(t, resp, input)
 }

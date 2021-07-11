@@ -28,12 +28,12 @@ func New(store Type, fileName string) Store {
 
 type FileStore struct {
 	FileName string
-	Mock *Mock
+	Mock     *Mock
 }
 
 type Mock struct {
 	Data []byte
-	Err error
+	Err  error
 }
 
 func (fs *FileStore) AddMock(mock *Mock) {
@@ -49,6 +49,8 @@ func (fs *FileStore) Write(data interface{}) error {
 		if fs.Mock.Err != nil {
 			return fs.Mock.Err
 		}
+		mockWrite, _ := json.Marshal(data)
+		fs.Mock.Data = mockWrite
 		return nil
 	}
 
@@ -67,7 +69,6 @@ func (fs *FileStore) Read(data interface{}) error {
 		}
 		return json.Unmarshal(fs.Mock.Data, data)
 	}
-
 
 	file, err := ioutil.ReadFile(fs.FileName)
 	if err != nil {

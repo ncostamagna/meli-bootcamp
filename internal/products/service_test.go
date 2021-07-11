@@ -36,17 +36,19 @@ func TestServiceGetAll(t *testing.T) {
 	}
 	myRepo := NewRepository(&storeStub)
 	myService := NewService(myRepo)
+
 	result, err := myService.GetAll()
+
 	assert.Equal(t, input, result)
 	assert.Nil(t, err)
 }
 
 func TestServiceGetAllError(t *testing.T) {
-	// Inicializacion (input/output)
-	errorEsperado := errors.New("error for GetAll")
+	// Initializing Input/output
+	expectedError := errors.New("error for GetAll")
 	dbMock := store.Mock{
 		Data: nil,
-		Err:  errorEsperado,
+		Err:  expectedError,
 	}
 
 	storeStub := store.FileStore{
@@ -55,13 +57,14 @@ func TestServiceGetAllError(t *testing.T) {
 	}
 	myRepo := NewRepository(&storeStub)
 	myService := NewService(myRepo)
+
 	result, err := myService.GetAll()
-	assert.Equal(t, errorEsperado, err)
+
+	assert.Equal(t, expectedError, err)
 	assert.Nil(t, result)
 }
 
 func TestStore(t *testing.T) {
-
 	testProduct := Product{
 		Name:  "CellPhone",
 		Type:  "Tech",
@@ -72,14 +75,15 @@ func TestStore(t *testing.T) {
 		Data: nil,
 		Err:  nil,
 	}
-
 	storeStub := store.FileStore{
 		FileName: "",
 		Mock:     &dbMock,
 	}
 	myRepo := NewRepository(&storeStub)
 	myService := NewService(myRepo)
+
 	result, _ := myService.Store(testProduct.Name, testProduct.Type, testProduct.Count, testProduct.Price)
+
 	assert.Equal(t, testProduct.Name, result.Name)
 	assert.Equal(t, testProduct.Type, result.Type)
 	assert.Equal(t, testProduct.Price, result.Price)
@@ -87,26 +91,26 @@ func TestStore(t *testing.T) {
 }
 
 func TestStoreError(t *testing.T) {
-
 	testProduct := Product{
 		Name:  "CellPhone",
 		Type:  "Tech",
 		Count: 3,
 		Price: 52.0,
 	}
-	errorEsperado := errors.New("error for Storage")
+	expectedError := errors.New("error for Storage")
 	dbMock := store.Mock{
 		Data: nil,
-		Err:  errorEsperado,
+		Err:  expectedError,
 	}
-
 	storeStub := store.FileStore{
 		FileName: "",
 		Mock:     &dbMock,
 	}
 	myRepo := NewRepository(&storeStub)
 	myService := NewService(myRepo)
+
 	result, err := myService.Store(testProduct.Name, testProduct.Type, testProduct.Count, testProduct.Price)
-	assert.Equal(t, errorEsperado, err)
+
+	assert.Equal(t, expectedError, err)
 	assert.Equal(t, Product{}, result)
 }
