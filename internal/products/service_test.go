@@ -9,6 +9,27 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+type DummyRepo struct{}
+
+func (dr *DummyRepo) GetAll() ([]Product, error) {
+	return []Product{}, nil
+}
+func (dr *DummyRepo) Store(id int, name, productType string, count int, price float64) (Product, error) {
+	return Product{}, nil
+}
+func (dr *DummyRepo) LastID() (int, error) {
+	return 0, nil
+}
+func (dr *DummyRepo) UpdateName(id int, name string) (Product, error) {
+	return Product{}, nil
+}
+func (dr *DummyRepo) Update(id int, name, productType string, count int, price float64) (Product, error) {
+	return Product{}, nil
+}
+func (dr *DummyRepo) Delete(id int) error {
+	return nil
+}
+
 func TestServiceGetAll(t *testing.T) {
 	input := []Product{
 		{
@@ -113,4 +134,14 @@ func TestStoreError(t *testing.T) {
 
 	assert.Equal(t, expectedError, err)
 	assert.Equal(t, Product{}, result)
+}
+
+func TestSum(t *testing.T) {
+	expectedResult := float64(6)
+	myDummyRepo := DummyRepo{}
+	myService := NewService(&myDummyRepo)
+
+	result := myService.Sum(1, 2, 3)
+
+	assert.Equal(t, expectedResult, result)
 }

@@ -46,12 +46,7 @@ func (fs *FileStore) ClearMock() {
 
 func (fs *FileStore) Write(data interface{}) error {
 	if fs.Mock != nil {
-		if fs.Mock.Err != nil {
-			return fs.Mock.Err
-		}
-		mockWrite, _ := json.Marshal(data)
-		fs.Mock.Data = mockWrite
-		return nil
+		return fs.Mock.Err
 	}
 
 	file, err := json.MarshalIndent(data, "", " ")

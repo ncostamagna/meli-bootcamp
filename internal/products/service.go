@@ -5,6 +5,7 @@ type Service interface {
 	Store(name, productType string, count int, price float64) (Product, error)
 	Update(id int, name, productType string, count int, price float64) (Product, error)
 	UpdateName(id int, name string) (Product, error)
+	Sum(prices ...float64) float64
 	Delete(id int) error
 }
 
@@ -51,4 +52,12 @@ func (s *service) UpdateName(id int, name string) (Product, error) {
 
 func (s *service) Delete(id int) error {
 	return s.repository.Delete(id)
+}
+
+func (s *service) Sum(prices ...float64) float64 {
+	var price float64
+	for _, p := range prices {
+		price += p
+	}
+	return price
 }
