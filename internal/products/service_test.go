@@ -49,7 +49,6 @@ func TestServiceGetAll(t *testing.T) {
 	dataJson, _ := json.Marshal(input)
 	dbMock := store.Mock{
 		Data: dataJson,
-		Err:  nil,
 	}
 	storeStub := store.FileStore{
 		FileName: "",
@@ -68,8 +67,7 @@ func TestServiceGetAllError(t *testing.T) {
 	// Initializing Input/output
 	expectedError := errors.New("error for GetAll")
 	dbMock := store.Mock{
-		Data: nil,
-		Err:  expectedError,
+		Err: expectedError,
 	}
 
 	storeStub := store.FileStore{
@@ -92,10 +90,8 @@ func TestStore(t *testing.T) {
 		Count: 3,
 		Price: 52.0,
 	}
-	dbMock := store.Mock{
-		Data: nil,
-		Err:  nil,
-	}
+	dbMock := store.Mock{}
+
 	storeStub := store.FileStore{
 		FileName: "",
 		Mock:     &dbMock,
@@ -120,8 +116,7 @@ func TestStoreError(t *testing.T) {
 	}
 	expectedError := errors.New("error for Storage")
 	dbMock := store.Mock{
-		Data: nil,
-		Err:  expectedError,
+		Err: expectedError,
 	}
 	storeStub := store.FileStore{
 		FileName: "",
